@@ -2,9 +2,9 @@ package com.company;
 
 public class MST {
 
-    private static final int V = 20;
+    private static final int V = 4;
 
-    int minKey(int key[], Boolean mstSet[])
+    int minKey(int[] key, Boolean[] mstSet)
     {
         // Initialize min value
         int min = Integer.MAX_VALUE, min_index = -1;
@@ -18,23 +18,24 @@ public class MST {
         return min_index;
     }
 
-    void printMST(int parent[], int graph[][])
+    void printMST(int[] parent, int[][] graph)
     {
         System.out.println("Edge \tWeight");
-        for (int i = 1; i < V; i++)
+        for (int i = 1; i < V; i++) {
             System.out.println(parent[i] + " - " + i + "\t" + graph[i][parent[i]]);
+        }
     }
 
-    void primMST(int graph[][])
+    int[] primMST(int[][] graph)
     {
         // Array to store constructed MST
-        int parent[] = new int[V];
+        int[] parent = new int[V];
 
         // Key values used to pick minimum weight edge in cut
-        int key[] = new int[V];
+        int[] key = new int[V];
 
         // To represent set of vertices included in MST
-        Boolean mstSet[] = new Boolean[V];
+        Boolean[] mstSet = new Boolean[V];
 
         // Initialize all keys as INFINITE
         for (int i = 0; i < V; i++) {
@@ -69,8 +70,13 @@ public class MST {
                     key[v] = graph[u][v];
                 }
         }
-
         // print the constructed MST
         printMST(parent, graph);
+        return parent;
+    }
+
+    void NewMst(int[] parents,int[][] graph)
+    {
+
     }
 }
