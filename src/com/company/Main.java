@@ -23,9 +23,24 @@ public class Main {
      //   setGraph(graph);
         // Print the solution
         int[] parents=t.primMST(graph);
-        AddEdge(rand,parents,graph);
 
-        t.NewMst(parents,graph);
+        Minimaltree(parents,graph);//create new graph minimal trees
+
+        int[] SaveIndexI = new int[1];
+        int[] SaveIndexJ = new int[1];
+        AddEdge(rand,parents,graph,SaveIndexI,SaveIndexJ);
+
+        t.NewMst(parents,graph,SaveIndexI,SaveIndexJ);
+    }
+
+    public static void Minimaltree(int[] parents,int[][]graph)
+    {
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                if (i!=parents[j]&&j!=parents[i])
+                    graph[i][j]=0;
+            }
+        }
     }
 
     public static void setGraph(int[][] graph)
@@ -37,7 +52,7 @@ public class Main {
         }
     }
 
-    public static void AddEdge(Random rand, int[] parents, int[][] graph)
+    public static void AddEdge(Random rand, int[] parents, int[][] graph, int[] saveIndexI, int[] saveIndexJ)
     {
         boolean flag=false;
         do {
@@ -47,6 +62,8 @@ public class Main {
             if (graph[indexI][indexJ]!=weight && indexI!=indexJ)
             {
                 if (indexI!=parents[indexJ]) {
+                    saveIndexI[0]=indexI;
+                    saveIndexJ[0]=indexJ;
                     graph[indexI][indexJ]=weight;
                     graph[indexJ][indexI]=weight;
                     flag = true;

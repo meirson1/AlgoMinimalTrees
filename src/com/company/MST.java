@@ -75,8 +75,11 @@ public class MST {
         return parent;
     }
 
-    void NewMst(int[] parents,int[][] graph)
+    void NewMst(int[] parents, int[][] graph, int[] saveIndexI, int[] saveIndexJ)
     {
+        boolean flag=false;
+        for (int i = 1; i < parents.length; i++) {
 
+        }
     }
 }
