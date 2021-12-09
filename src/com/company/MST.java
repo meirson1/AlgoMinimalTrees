@@ -80,18 +80,52 @@ public class MST {
     void NewMst(int[] parents, int[][] graph, int[] saveIndexI, int[] saveIndexJ)
     {
         ArrayList<ArrayList<Integer>> adjListArray = convert(graph);
-        LinkedList<Integer> circle=FindCircleDfs(adjListArray);
         int max=0;
-        int indexI=0;
-        int indexJ=0;
-        for (int i = 0; i < circle.size(); i++) {
-            if (max > graph[circle.get(i)][circle.get(i+1)]) {
-                max = graph[circle.get(i)][circle.get(i+1)];
-                indexI=circle.get(i);
-                indexJ=circle.get(i+1);
-            }
+        List<Edge> ed=new ArrayList<>();
+        Edge temp=null;
+        for (int i = 1; i < parents.length; i++) {
+            temp=new Edge(parents[i],i);
+            ed.add(temp);
         }
-        removeEdge(graph,max,indexI,indexJ);
+        temp=new Edge(saveIndexI[0],saveIndexJ[0]);
+        ed.add(temp);
+
+//        String[][] color=new String[V][V];
+//        for (int i = 0; i < V; i++) {
+//            for (int j = i+1; j < V; j++) {
+//                if (graph[i][j]!=0) {
+//                    color[i][j] = "white";
+//                    color[j][i] = "white";
+//                }
+//            }
+//        }
+//        color[0][0]="gray";
+//        int max=0;
+//        for (int i = 0; i < adjListArray.size(); i++) {
+//            for (int j = 0; j < adjListArray.get(i).size(); j++) {
+//                if (color[adjListArray.get(i).get(j)][adjListArray.get(j).get(i)].equals("white")) {
+//                    color[i][j] = "gray";
+//                } else if (color[i][j] == "gray") {
+//                    while (graph[i][j] != parents[i]) {
+//                        if (max < graph[i][j])
+//                            max = graph[i][j];
+//                    }
+//                    break;
+//                }
+//            }
+//        }
+
+//        LinkedList<Integer> circle=FindCircleDfs(adjListArray);
+//        int indexI=0;
+//        int indexJ=0;
+//        for (int i = 0; i < circle.size(); i++) {
+//            if (max > graph[circle.get(i)][circle.get(i+1)]) {
+//                max = graph[circle.get(i)][circle.get(i+1)];
+//                indexI=circle.get(i);
+//                indexJ=circle.get(i+1);
+//            }
+//        }
+//        removeEdge(graph,max,indexI,indexJ);
         printGraph(graph);
     }
 
@@ -143,5 +177,14 @@ public class MST {
     public void removeEdge(int[][] graph,int max,int i,int j){
         graph[i][j]=0;
         graph[j][i]=0;
+    }
+
+    public class Edge {
+        int source,dest;
+        public Edge(int source, int dest)
+        {
+            this.source = source;
+            this.dest = dest;
+        }
     }
 }
