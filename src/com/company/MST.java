@@ -81,15 +81,24 @@ public class MST {
     {
         ArrayList<ArrayList<Integer>> adjListArray = convert(graph);
         int max=0;
+        int indexI=0;
+        int indexJ=0;
         List<Edge> ed=new ArrayList<>();
         Edge temp=null;
         for (int i = 1; i < parents.length; i++) {
-            temp=new Edge(parents[i],i);
+            temp=new Edge(parents[i],i,graph[i][parents[i]]);
             ed.add(temp);
         }
-        temp=new Edge(saveIndexI[0],saveIndexJ[0]);
+        temp=new Edge(saveIndexI[0],saveIndexJ[0],graph[saveIndexI[0]][saveIndexJ[0]]);
         ed.add(temp);
-
+        for (int i = 0; i < ed.size(); i++) {
+            if (max<ed.get(i).weight) {
+                max = ed.get(i).weight;
+                indexI=ed.get(i).dest;
+                indexJ=ed.get(i).source;
+            }
+        }
+        removeEdge(graph,max,indexI,indexJ);
 //        String[][] color=new String[V][V];
 //        for (int i = 0; i < V; i++) {
 //            for (int j = i+1; j < V; j++) {
@@ -114,10 +123,7 @@ public class MST {
 //                }
 //            }
 //        }
-
 //        LinkedList<Integer> circle=FindCircleDfs(adjListArray);
-//        int indexI=0;
-//        int indexJ=0;
 //        for (int i = 0; i < circle.size(); i++) {
 //            if (max > graph[circle.get(i)][circle.get(i+1)]) {
 //                max = graph[circle.get(i)][circle.get(i+1)];
@@ -125,7 +131,6 @@ public class MST {
 //                indexJ=circle.get(i+1);
 //            }
 //        }
-//        removeEdge(graph,max,indexI,indexJ);
         printGraph(graph);
     }
 
@@ -180,11 +185,12 @@ public class MST {
     }
 
     public class Edge {
-        int source,dest;
-        public Edge(int source, int dest)
+        int source,dest,weight;
+        public Edge(int source, int dest,int weight)
         {
             this.source = source;
             this.dest = dest;
+            this.weight=weight;
         }
     }
 }
