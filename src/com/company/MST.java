@@ -79,10 +79,10 @@ public class MST {
 
     void NewMst(int[] parents, int[][] graph, int[] saveIndexI, int[] saveIndexJ)
     {
-        List<List<Integer>> adjListArray = convert(graph);
-        //int max=0;
-        //int indexI=0;
-        //int indexJ=0;
+        ArrayList<ArrayList<Integer>> adjListArray = convert(graph);
+        int max=0;
+        int indexI=0;
+        int indexJ=0;
         List<Edge> ed=new ArrayList<>();
         Edge temp=null;
         for (int i = 1; i < parents.length; i++) {
@@ -90,24 +90,15 @@ public class MST {
             ed.add(temp);
         }
         temp=new Edge(saveIndexI[0],saveIndexJ[0],graph[saveIndexI[0]][saveIndexJ[0]]);
-        //ed.add(temp);
-
-        for (int i = 0; i < ed.size(); i++) {//switch
-            if (temp.getDest()==ed.get(i).getSource()||temp.getSource()==ed.get(i).getDest()){//switch source with des
-                int tempS=ed.get(i).getDest();
-                ed.get(i).setDest(ed.get(i).getSource());
-                ed.get(i).setSource(tempS);
+        ed.add(temp);
+        for (int i = 0; i < ed.size(); i++) {
+            if (max<ed.get(i).weight) {
+                max = ed.get(i).weight;
+                indexI=ed.get(i).dest;
+                indexJ=ed.get(i).source;
             }
         }
-
-//        for (int i = 0; i < ed.size(); i++) {
-//            if (max<ed.get(i).weight) {
-//                max = ed.get(i).weight;
-//                indexI=ed.get(i).dest;
-//                indexJ=ed.get(i).source;
-//            }
-//        }
-//        removeEdge(graph,max,indexI,indexJ);
+        removeEdge(graph,max,indexI,indexJ);
 //        String[][] color=new String[V][V];
 //        for (int i = 0; i < V; i++) {
 //            for (int j = i+1; j < V; j++) {
@@ -151,15 +142,15 @@ public class MST {
         }
     }
 
-    public static List<List<Integer>> convert(int[][] graph) {
+    public static ArrayList<ArrayList<Integer>> convert(int[][] graph) {
         int l = graph[0].length;
-        List<List<Integer>> adjListArray = new ArrayList<>(l);
+        ArrayList<ArrayList<Integer>> adjListArray = new ArrayList<ArrayList<Integer>>(l);
 
         // Create a new list for each
         // vertex such that adjacent
         // nodes can be stored
         for (int i = 0; i < l; i++) {
-            adjListArray.add(new LinkedList<>());
+            adjListArray.add(new ArrayList<Integer>());
         }
 
         for (int i = 0; i < graph[0].length; i++) {
@@ -200,30 +191,6 @@ public class MST {
             this.source = source;
             this.dest = dest;
             this.weight=weight;
-        }
-
-        public int getSource() {
-            return source;
-        }
-
-        public void setSource(int source) {
-            this.source = source;
-        }
-
-        public int getDest() {
-            return dest;
-        }
-
-        public void setDest(int dest) {
-            this.dest = dest;
-        }
-
-        public int getWeight() {
-            return weight;
-        }
-
-        public void setWeight(int weight) {
-            this.weight = weight;
         }
     }
 }

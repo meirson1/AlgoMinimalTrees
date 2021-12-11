@@ -43,6 +43,7 @@ public class Main {
         }
     }
 
+
     public static void setGraph(int[][] graph)
     {
         for (int i = 0; i < N; i++) {
